@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Comissária</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Fonte Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Remove o aviso de favicon ausente no console -->
+    <link rel="shortcut icon" href="#">
+    <!-- Estilos e Confetes -->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Fundo Animado do Céu -->
+    <div class="sky">
+        <div class="sun"></div>
+        <div class="stars"></div>
+        <!-- Container de Estrelas Cadentes -->
+        <div class="shooting-stars">
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+        </div>
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+    </div>
+
+    <!-- Tela de Início / Boas-Vindas -->
+    <div id="start-screen" class="quiz-card text-center fade-in">
+        <div class="award-icon">
+            <i class="fa-solid fa-plane-departure" style="color: rgb(175, 127, 178);"></i>
+        </div>
+        <span class="badge">Missão Comissária</span>
+        <h1>Bem-vinda, minha futura Comissária!</h1>
+        <p class="start-text">Cada pergunta respondida é mais um voo em direção ao seu sonho.<br><br><strong>Eu acredito
+                em você.</strong></p>
+        <button id="start-btn" class="btn btn-primary">Agora vamos decolar? </button>
+    </div>
+
+    <!-- Container Principal do Quiz (Oculto no início) -->
+    <div id="main-game" class="container hidden">
+
+        <!-- Cabeçalho com Botões de Controle -->
+        <div class="top-controls">
+            <button id="theme-toggle" class="icon-btn" title="Alternar Modo Noturno">
+                <i class="fa-solid fa-moon" style="color: rgb(175, 127, 178);"></i>
+            </button>
+            <div class="right-controls">
+                <button id="tower-btn" class="icon-btn" title="Pedir Dica">
+                    <i class="fa-solid fa-tower-observation" style="color: rgb(255, 212, 59);"></i>
+                    <span id="hints-count" class="badge-count">3</span>
+                </button>
+                <button id="passport-btn" class="icon-btn" title="Diário & Passaporte">
+                    <i class="fa-solid fa-passport" style="color: rgb(175, 127, 178);"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Cabeçalho Principal -->
+        <header class="header">
+            <span class="badge">Rumo à Aprovação ANAC</span>
+            <h1>Simulado da Comissária</h1>
+            <p>Cada questão é um passo rumo às suas asas!</p>
+        </header>
+
+        <!-- Barra de Progresso com Ícones de Decolagem e Pouso -->
+        <div class="progress-labels">
+            <span><i class="fa-solid fa-plane-departure" style="color: rgb(175, 127, 178);"></i> Decolagem</span>
+            <span id="progress-percent">0%</span>
+            <span><i class="fa-solid fa-plane-arrival" style="color: rgb(175, 127, 178);"></i> Pouso</span>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar">
+                <div class="plane-icon" id="plane-icon">
+                    <i class="fa-solid fa-plane" style="color: rgb(175, 127, 178);"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Container do Card de Questão -->
+        <div id="quiz-box" class="quiz-card">
+            <!-- Botão Temporário para Testar a Tela Final -->
+            <button id="btn-testar-final"
+                style="display: block; margin: 20px auto; padding: 10px 20px; background: #ec4899; color: white; border: none; border-radius: 20px; font-weight: bold; cursor: pointer;">
+
+            </button>
+
+            <div class="quiz-header">
+                <span id="subject-tag" class="tag">Meteorologia</span>
+                <span id="medal-tag" class="medal-tag">🥉 Primeiro Voo</span>
+                <span id="question-number">Questão 1 de 50</span>
+            </div>
+
+            <h2 id="question-text">Carregando pergunta...</h2>
+
+            <div id="options-container" class="options-list">
+                <!-- As opções são geradas dinamicamente via JS -->
+            </div>
+
+            <div id="feedback-box" class="feedback-box hidden">
+                <p id="feedback-text"></p>
+                <button id="next-btn" class="btn btn-primary">Próxima Questão</button>
+            </div>
+        </div>
+
+        <!-- Modal Torre de Controle (Dicas) -->
+        <div id="tower-modal" class="modal hidden">
+            <div class="modal-content quiz-card text-center">
+                <div class="award-icon">
+                    <i class="fa-solid fa-tower-observation" style="color: rgb(255, 212, 59);"></i>
+                </div>
+                <h2>Torre de Controle Responde</h2>
+                <p id="tower-message" class="tower-text"
+                    style="margin: 15px 0; font-size: 1.1rem; color: var(--text-main);"></p>
+                <button id="close-tower-btn" class="btn btn-primary">Entendido, Torre!</button>
+            </div>
+        </div>
+
+        <!-- MODAL DE CARTA / MENSAGEM ESPECIAL -->
+        <div id="letter-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3 style="color: var(--text-title); font-size: 1.4rem;">💌 Você recebeu uma carta!</h3>
+
+                <!-- Ícone do Envelope Clicável -->
+                <div id="envelope-box" title="Clique para abrir">✉️</div>
+
+                <p id="envelope-instruction" style="font-size: 0.9rem; color: #64748b;">
+                    Clique no envelope para ler a mensagem especial!
+                </p>
+
+                <!-- Texto que fica oculto até o clique -->
+                <div id="letter-message" class="hidden-message"></div>
+
+                <!-- Botão Fechar -->
+                <button id="close-letter-btn" class="btn btn-primary hidden" style="margin-top: 10px;">
+                    Guardar Carta
+                </button>
+            </div>
+        </div>
+        <!-- Modal Passaporte Completo com Foto e Informações -->
+        <div id="diary-modal" class="modal hidden">
+            <div class="modal-content quiz-card passport-card">
+                <div class="passport-header text-center">
+                    <h2>PASSAPORTE DE VOO</h2>
+                    <span class="badge" style="background: #fbcfe8; color: #831843;">Comissária VIP</span>
+                </div>
+
+                <div class="passport-body">
+                    <div class="profile-section">
+                        <div class="profile-avatar" id="avatar-container" title="Clique para alterar sua foto">
+                            <!-- Imagem de perfil (inicia oculta se não houver foto) -->
+                            <img id="user-avatar-img" src="" alt="Foto de Perfil" class="passport-photo hidden">
+
+                            <!-- Ícone padrão do astronauta/bonequinho -->
+                            <i id="default-avatar-icon" class="fa-solid fa-user-astronaut"></i>
+
+                            <!-- Camada de overlay com o ícone de câmera ao passar o mouse -->
+                            <div class="avatar-overlay">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+
+                            <!-- Input invisível de arquivo -->
+                            <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="profile-info">
+                            <p class="info-label">NOME DA COMISSÁRIA</p>
+                            <p class="info-value">Gercilayne</p>
+
+                            <p class="info-label">HABILITAÇÃO / STATUS</p>
+                            <p class="info-value" id="passport-status">Em Treinamento ANAC</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-box">
+                        <div class="stat-item">
+                            <span class="stat-number" id="total-flights">0</span>
+                            <span class="stat-label">Voos Concluídos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="current-score">0</span>
+                            <span class="stat-label">Pontuação Atual</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="best-streak">0</span>
+                            <span class="stat-label">Melhor Sequência</span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-center" style="margin-top: 20px; font-size: 1rem; color: var(--text-title);">
+                        <i class="fa-solid fa-stamp" style="color: var(--accent-purple);"></i> Carimbos & Conquistas
+                    </h3>
+
+                    <div class="stickers-grid">
+                        <div class="sticker-item text-center">
+                            <span class="sticker locked" id="stk-1" title="Primeiro Voo">
+                                <i class="fa-solid fa-plane" style="color: rgb(255, 212, 59);"></i>
+                            </span>
+                            <small>Primeiro Voo</small>
+                        </div>
+                        <div class="sticker-item text-center">
+                            <span class="sticker locked" id="stk-2" title="Streak de 3">
+                                <i class="fa-solid fa-cloud" style="color: rgb(255, 212, 59);"></i>
+                            </span>
+                            <small>Streak de 3</small>
+                        </div>
+                        <div class="sticker-item text-center">
+                            <span class="sticker locked" id="stk-3" title="Torre de Controle">
+                                <i class="fa-solid fa-tower-observation" style="color: rgb(255, 212, 59);"></i>
+                            </span>
+                            <small>Uso da Torre</small>
+                        </div>
+                        <div class="sticker-item text-center">
+                            <span class="sticker locked" id="stk-4" title="15 Acertos">
+                                <i class="fa-solid fa-star" style="color: rgb(255, 212, 59);"></i>
+                            </span>
+                            <small>15 Acertos</small>
+                        </div>
+                        <div class="sticker-item text-center">
+                            <span class="sticker locked" id="stk-5" title="Asas da Comandante">
+                                <i class="fa-solid fa-award" style="color: rgb(255, 212, 59);"></i>
+                            </span>
+                            <small>3 Voos</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="close-diary-btn" class="btn btn-primary" style="margin-top: 20px;">Fechar
+                    Passaporte</button>
+            </div>
+        </div>
+
+        <!-- TELA FINAL - CARTÃO DE EMBARQUE -->
+        <!-- TELA FINAL - CARTÃO DE EMBARQUE GIRATÓRIO -->
+        <div id="result-screen" class="hidden">
+
+            <div class="perspective-container" id="card-flip-trigger">
+                <div class="boarding-pass-card" id="boarding-card">
+
+                    <!-- FRENTE DO CARTÃO -->
+                    <div class="pass-front">
+                        <div class="pass-header">
+                            <div class="airline-brand">
+                                <span class="plane-icon"></span>
+                                <span class="airline-name">ANAC AIRLINES</span>
+                            </div>
+                            <div class="pass-title">BOARDING PASS</div>
+                        </div>
+
+                        <div class="pass-welcome">
+                            <p class="motivational-text">
+                                Parabéns! Você concluiu mais uma missão.<br>
+                                Continue estudando. Seu sonho está cada vez mais perto.<br>
+
+                            </p>
+                        </div>
+
+                        <div class="pass-body">
+                            <div class="pass-row">
+                                <div class="pass-col">
+                                    <span class="label">PASSAGEIRA</span>
+                                    <span class="value">Gecilayne / Futura Comissária</span>
+                                </div>
+                                <div class="pass-col right">
+                                    <span class="label">VOO</span>
+                                    <span class="value">ANAC-2026</span>
+                                </div>
+                            </div>
+
+                            <div class="pass-row">
+                                <div class="pass-col">
+                                    <span class="label">ORIGEM ➔ DESTINO</span>
+                                    <span class="value">Dedicação ➔ Aprovação</span>
+                                </div>
+                                <div class="pass-col right">
+                                    <span class="label">ASSENTO</span>
+                                    <span class="value">01A (Primeira Classe)</span>
+                                </div>
+                            </div>
+
+                            <div class="pass-divider"></div>
+
+                            <div class="pass-row stats-highlight">
+                                <div class="pass-col">
+                                    <span class="label">TOTAL DE ACERTOS</span>
+                                    <span class="value-highlight" id="final-score">0 / 50</span>
+                                </div>
+                                <div class="pass-col">
+                                    <span class="label">APROVEITAMENTO</span>
+                                    <span class="value-highlight" id="final-percentage">0%</span>
+                                </div>
+                            </div>
+
+                            <div class="rank-container">
+                                <span class="label">NÍVEL ATINGIDO</span>
+                                <div class="rank-badge" id="final-rank">Comandante Master 🧑‍✈️✨</div>
+                            </div>
+                        </div>
+
+                        <div class="pass-footer">
+                            <div class="qr-section">
+                                <img id="spotify-qr-code" src="img\qr.png" alt="QR Code Spotify" class="qr-img">
+                                <div class="qr-text">
+                                    <span>Trilha Sonora do Voo</span>
+                                    <small>Escaneie para ouvir no Spotify</small>
+                                </div>
+                            </div>
+                            <div class="flip-hint">🔄 Clique no cartão para virar</div>
+                        </div>
+                    </div>
+
+                    <!-- VERSO DO CARTÃO (FOTO) -->
+                    <div class="pass-back">
+                        <div class="back-photo-container">
+                            <!-- COLOQUE A SUA FOTO AQUI -->
+                            <img src="img\amor.jpg" alt="Foto de Lembrança" class="back-photo">
+                        </div>
+                        <div class="back-caption">
+                            "O seu sucesso já está em fase de decolagem!! "
+                        </div>
+                        <div class="flip-hint">🔄 Clique para voltar</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- BOTAO DE REINICIAR (FORA DO CARD QUE GIRA) -->
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="restart-btn" class="btn btn-primary">
+                    Decolar Novamente
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+
+    <!-- Inclusão do Script JS Principal -->
+    <script src="script.js"></script>
+</body>
+
+</html>

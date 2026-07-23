@@ -1,0 +1,1147 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #ffffff 40%, #fce7f3 70%, #fef9c3 100%);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --text-main: #334155;
+  --text-title: #1e293b;
+  --border-color: #869fc1;
+  --btn-hover: #fdf2f8;
+  --accent-purple: rgb(175, 127, 178);
+  --accent-pink: #ec4899;
+}
+
+/* Modo Noturno 🌙 */
+body.night-mode {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+  --card-bg: rgba(30, 41, 59, 0.92);
+  --text-main: #abc5d6;
+  --text-title: #ffffff;
+  --border-color: #334155;
+  --btn-hover: #334155;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+body {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-main);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* --- Fundo do Céu Animado --- */
+.sky {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sun {
+  position: absolute;
+  top: 40px; right: 60px;
+  width: 70px; height: 70px;
+  background: radial-gradient(circle, #fef08a 0%, #facc15 70%, #eab308 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 35px #fde047;
+  transition: all 0.5s ease;
+}
+
+body.night-mode .sun {
+  background: radial-gradient(circle, #f1f5f9 0%, #cbd5e1 70%, #94a3b8 100%);
+  box-shadow: 0 0 25px rgba(241, 245, 249, 0.6), inset -8px -4px 0px 2px #64748b;
+  transform: scale(0.9);
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 90px;
+  animation: float-cloud linear infinite;
+}
+
+.cloud::before, .cloud::after {
+  content: ''; position: absolute; background: rgba(255, 255, 255, 0.85); border-radius: 50%;
+}
+
+.cloud1 { top: 15%; left: -150px; width: 120px; height: 40px; animation-duration: 38s; }
+.cloud1::before { width: 50px; height: 50px; top: -20px; left: 20px; }
+.cloud1::after { width: 40px; height: 40px; top: -15px; left: 55px; }
+
+.cloud2 { top: 38%; left: -180px; width: 160px; height: 50px; animation-duration: 52s; animation-delay: 6s; }
+.cloud2::before { width: 65px; height: 65px; top: -25px; left: 25px; }
+.cloud2::after { width: 50px; height: 50px; top: -18px; left: 75px; }
+
+.cloud3 { top: 65%; left: -140px; width: 110px; height: 35px; animation-duration: 42s; animation-delay: 15s; }
+.cloud3::before { width: 45px; height: 45px; top: -18px; left: 18px; }
+.cloud3::after { width: 35px; height: 35px; top: -12px; left: 48px; }
+
+body.night-mode .cloud,
+body.night-mode .cloud::before,
+body.night-mode .cloud::after {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+@keyframes float-cloud {
+  from { transform: translateX(0); }
+  to { transform: translateX(120vw); }
+}
+
+/* Estrelas e Estrelas Cadentes no Modo Noturno */
+.stars {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 230px 80px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 310px 150px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 370px 50px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 450px 110px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 520px 190px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 550px 250px;
+}
+
+body.night-mode .stars {
+  opacity: 0.85;
+  animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.9; }
+}
+
+.shooting-stars {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.night-mode .shooting-stars { opacity: 1; }
+
+.shooting-star {
+  position: absolute;
+  top: 10%; left: 50%;
+  width: 120px; height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+  transform: rotate(-35deg);
+  animation: shoot 4s linear infinite;
+}
+
+.shooting-star:nth-child(1) { top: 15%; left: 60%; animation-delay: 0s; animation-duration: 3.5s; }
+.shooting-star:nth-child(2) { top: 35%; left: 40%; animation-delay: 2s; animation-duration: 4.5s; }
+.shooting-star:nth-child(3) { top: 5%; left: 75%; animation-delay: 3.8s; animation-duration: 3s; }
+
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 1; width: 120px; }
+  20% { transform: translateX(-300px) translateY(210px) rotate(-35deg); opacity: 0; width: 0px; }
+  100% { transform: translateX(-300px) translateY(210px) rotate(-35deg); opacity: 0; }
+}
+
+/* --- Container e Cards --- */
+.container {
+  width: 100%;
+  max-width: 600px;
+}
+
+#start-screen {
+  max-width: 650px;
+  width: 90%;
+  padding: 40px 35px;
+  border-radius: 28px;
+  background: var(--card-bg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  margin: 0 auto;
+}
+
+#start-screen h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 15px 0;
+  color: var(--text-title);
+}
+
+#start-screen .start-text {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #64748b;
+}
+
+body.night-mode #start-screen .start-text { color: #cbd5e1; }
+
+/* Botões e Interações */
+.btn, .option-btn, .icon-btn {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.25s ease, 
+              background-color 0.25s ease;
+  will-change: transform;
+}
+
+.btn:hover, .option-btn:hover:not(:disabled), .icon-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.btn:active, .option-btn:active:not(:disabled), .icon-btn:active {
+  transform: translateY(-1px);
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #ec4899, var(--accent-purple));
+  color: white;
+}
+
+/* Controles Superiores */
+.top-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.right-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  font-size: 18px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  position: relative;
+}
+
+.badge-count {
+  position: absolute;
+  top: -5px; right: -5px;
+  background: #a673a8;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.badge {
+  background-color: #fdf2f8;
+  color: var(--accent-purple);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--text-title);
+  margin-top: 8px;
+}
+
+.header p {
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* Barra de Progresso */
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 12px;
+  background: rgba(226, 232, 240, 0.6);
+  border-radius: 20px;
+  position: relative;
+  overflow: visible;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, var(--accent-purple));
+  border-radius: 20px;
+  position: relative;
+  transition: width 0.4s ease-in-out;
+}
+
+.plane-icon {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* Card das Perguntas */
+.quiz-card {
+  background: var(--card-bg);
+  padding: 28px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  backdrop-filter: blur(8px);
+  position: relative;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.tag {
+  background-color: #fdf2f8;
+  color: #db2777;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.medal-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: #d97706;
+}
+
+#question-number {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+#question-text {
+  font-size: 18px;
+  color: var(--text-title);
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-btn {
+  background-color: #f8fafc;
+  border: 2px solid var(--border-color);
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+body.night-mode .option-btn {
+  background-color: #334155;
+  color: #f8fafc;
+}
+
+.option-btn.correct {
+  background-color: #dcfce7 !important;
+  border-color: #22c55e !important;
+  color: #15803d !important;
+}
+
+.option-btn.wrong {
+  background-color: #fee2e2 !important;
+  border-color: #ef4444 !important;
+  color: #b91c1c !important;
+}
+
+.option-btn.eliminated {
+  opacity: 0.35;
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
+/* Modais e Passaporte */
+.modal {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  max-width: 480px;
+  width: 100%;
+}
+
+.passport-card {
+  border: 2px solid var(--accent-purple);
+  background: var(--card-bg);
+}
+
+.passport-header h2 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--text-title);
+  margin-bottom: 6px;
+}
+
+.passport-body {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(253, 242, 248, 0.6);
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px dashed #f472b6;
+}
+
+body.night-mode .profile-section {
+  background: rgba(51, 65, 85, 0.6);
+  border-color: #831843;
+}
+
+.profile-avatar {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f472b6, var(--accent-purple));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 32px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.info-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-title);
+}
+
+.stats-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: rgba(248, 250, 252, 0.8);
+  padding: 14px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+body.night-mode .stats-box { background: rgba(51, 65, 85, 0.8); }
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 18px;
+  font-weight: 900;
+  color: #db2777;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+body.night-mode .stat-label { color: #cbd5e1; }
+
+.stickers-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 26px;
+  margin-top: 10px;
+}
+
+.sticker-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sticker-item small {
+  font-size: 10px;
+  margin-top: 4px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.sticker.locked {
+  opacity: 0.22;
+  filter: grayscale(1);
+}
+
+/* Utilitários */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.award-icon { font-size: 48px; margin-bottom: 8px; }
+
+/* --- TELA DE RESULTADO / POUSO FINAL 🛬 --- */
+.landing-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.landing-header h2 {
+  font-size: 1.8rem;
+  color: var(--text-title);
+  margin-bottom: 12px;
+}
+
+.landing-badge {
+  display: inline-block;
+  background: rgba(236, 72, 153, 0.15);
+  color: #ec4899;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.motivational-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-top: 8px;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 20px 0;
+}
+
+body.night-mode .divider {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Cartão de Desempenho */
+.performance-card {
+  background: rgba(248, 250, 252, 0.6);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+
+body.night-mode .performance-card {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.performance-card h3 {
+  font-size: 1.1rem;
+  color: var(--text-title);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-bottom: 15px;
+  gap: 12px;
+}
+
+.stat-box {
+  flex: 1;
+  background: var(--card-bg);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.stat-box small {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+body.night-mode .stat-box small { color: #cbd5e1; }
+
+.stat-box .stat-number {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--accent-pink);
+}
+
+.rank-badge-box {
+  text-align: center;
+  background: rgba(236, 72, 153, 0.08);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--accent-pink);
+}
+
+.rank-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #d97706;
+  margin-top: 4px;
+}
+
+/* Passaporte Final */
+.passport-section {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.passport-section h3 {
+  font-size: 1.1rem;
+  color: var(--text-title);
+  margin-bottom: 6px;
+}
+
+.passport-section p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 14px;
+}
+
+body.night-mode .passport-section p { color: #cbd5e1; }
+
+/* --- ESTILOS DO MODAL DA CARTA --- */
+#letter-modal .modal-content {
+  background: var(--card-bg);
+  padding: 30px 24px;
+  border-radius: 24px;
+  text-align: center;
+  border: 2px solid var(--accent-pink);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  max-width: 420px;
+  width: 90%;
+}
+
+/* Envelope Clicável e Animado */
+#envelope-box {
+  font-size: 50px;
+  cursor: pointer;
+  margin: 15px auto;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+#envelope-box:hover {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+/* Mensagem Escondida (antes de abrir) */
+.hidden-message {
+  display: none !important;
+}
+
+/* Mensagem Revelada */
+#letter-message {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-title);
+  background: rgba(253, 242, 248, 0.8);
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px dashed var(--accent-pink);
+  margin: 15px 0;
+  animation: popIn 0.4s ease;
+}
+
+body.night-mode #letter-message {
+  background: rgba(51, 65, 85, 0.8);
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --- CARTÃO DE EMBARQUE REALISTA --- */
+.boarding-pass {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 20px;
+  max-width: 440px;
+  margin: 20px auto;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid #e2e8f0;
+}
+
+body.night-mode .boarding-pass {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+/* Header do Bilhete */
+.pass-header {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.airline-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.pass-title {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+/* Mensagem Carinhosa */
+.pass-welcome {
+  padding: 16px 20px 10px;
+  text-align: center;
+  background: #f0f9ff;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+body.night-mode .pass-welcome {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+.motivational-text {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #0f172a;
+}
+
+body.night-mode .motivational-text {
+  color: #e2e8f0;
+}
+
+/* Corpo do Bilhete */
+.pass-body {
+  padding: 18px 20px;
+}
+
+.pass-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.pass-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.pass-col.right {
+  text-align: right;
+}
+
+.label {
+  font-size: 0.68rem;
+  color: #64748b;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+body.night-mode .label {
+  color: #94a3b8;
+}
+
+.value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0284c7;
+  margin-top: 2px;
+}
+
+.pass-divider {
+  height: 1px;
+  border-top: 2px dashed #cbd5e1;
+  margin: 12px 0 16px;
+}
+
+body.night-mode .pass-divider {
+  border-color: #334155;
+}
+
+.stats-highlight {
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+body.night-mode .stats-highlight {
+  background: #1e293b;
+}
+
+.value-highlight {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #10b981;
+}
+
+.rank-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.rank-badge {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f59e0b;
+  margin-top: 4px;
+}
+
+/* QR Code Footer */
+.pass-footer {
+  background: #f1f5f9;
+  padding: 16px 20px;
+  border-top: 2px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+body.night-mode .pass-footer {
+  background: #0b1329;
+  border-color: #334155;
+}
+
+.qr-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+body.night-mode .qr-section {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.qr-img {
+  width: 75px;
+  height: 75px;
+  border-radius: 6px;
+}
+
+.qr-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.qr-text span {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #10b981;
+}
+
+.qr-text small {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* --- TELA FINAL: CONTAINER 3D --- */
+.perspective-container {
+  perspective: 1000px;
+  max-width: 440px;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+/* O Card que vai girar */
+.boarding-pass-card {
+  width: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Classe adicionada via JS ao clicar */
+.boarding-pass-card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* As duas faces do cartão */
+.pass-front, .pass-back {
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.pass-front {
+  background: #ffffff;
+  color: #1e293b;
+}
+
+body.night-mode .pass-front {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+/* Verso do Cartão (Face de Trás) */
+.pass-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #ffffff;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+body.night-mode .pass-back {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+/* Estilo da Foto e Mensagem do Verso */
+.back-photo-container {
+  width: 100%;
+  height: 70%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid #f472b6;
+  box-shadow: 0 8px 20px rgba(244, 114, 182, 0.2);
+}
+
+.back-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.back-caption {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #db2777;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+body.night-mode .back-caption {
+  color: #f472b6;
+}
+
+.flip-hint {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Reduzir o tamanho do botão Decolar Novamente */
+#restart-btn {
+  padding: 8px 18px;    /* Espaçamento interno menor */
+  font-size: 0.85rem;   /* Tamanho do texto e do emoji menor */
+  border-radius: 20px;  /* Deixa o botão mais delicado e arredondado */
+  margin: 10px auto;    /* Centraliza e ajusta a margem */
+  max-width: fit-content;
+}
+
+/* FORÇAR OS BOTÕES A DESCEREM */
+#theme-toggle, 
+#tower-btn, 
+#passport-btn {
+  top: 0px !important;        /* Se usarem posição fixa/absoluta */
+  margin-top: 35px !important; /* Se usarem posição relativa/fluxo normal */
+}
+.top-actions, 
+.header-actions, 
+.top-bar {
+  margin-top: 12px !important;
+  padding-top: 15px !important;
+}
+
+/* Container da Foto de Perfil */
+.profile-avatar {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 50%;
+    background: #e2a8d8; /* Cor de fundo padrão */
+    border: 2px solid var(--accent-purple, #be185d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Foto do Usuário */
+.passport-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Ícone Padrão */
+#default-avatar-icon {
+    font-size: 1.8rem;
+    color: #ffffff;
+}
+
+/* Efeito ao passar o mouse (Camada da Câmera) */
+.avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.profile-avatar:hover .avatar-overlay {
+    opacity: 1;
+}
+
+/* Classe utilitária para esconder elementos */
+.hidden {
+    display: none !important;
+}
+
+/* Botão Secreto de Teste */
+#btn-testar, 
+#btn-testar-final {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.05; /* Praticamente invisível */
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+/* Fica levemente visível só quando você passa o mouse por cima */
+#btn-testar:hover, 
+#btn-testar-final:hover {
+    opacity: 0.8;
+}
