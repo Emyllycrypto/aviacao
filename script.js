@@ -1,64 +1,362 @@
-// Banco de Dados das 50 Questões ANAC com dicas para a Torre de Controle
-const questions = [
-    // Regulamentos, ANAC, ICAO, VFR, IFR
-    { subject: "Regulamentos", question: "Qual órgão é responsável por regulação e fiscalização da aviação civil no Brasil?", options: ["DECEA", "ANAC", "ICAO", "FAB"], correct: 1, hint: "Pense no órgão nacional da Agência Nacional de Aviação Civil!" },
-    { subject: "Regulamentos", question: "A sigla ICAO (OACI em português) refere-se a qual organização internacional?", options: ["Organização de Aviação Comercial", "Organização da Aviação Civil Internacional", "Órgão Central de Aeronaves", "Associação Internacional de Pilotos"], correct: 1, hint: "É uma organização global para a Aviação Civil Internacional." },
-    { subject: "Regulamentos", question: "VFR é a sigla que define as regras de voo:", options: ["Por Instrumentos", "Noturnos Obrigatórios", "Visuais", "Comerciais de Carga"], correct: 2, hint: "A letra 'V' vem de Visual Flying Rules." },
-    { subject: "Regulamentos", question: "Quando a visibilidade do aeroporto fica abaixo dos limites visuais, opera-se sob regras:", options: ["VFR", "IFR", "VMC", "GND"], correct: 1, hint: "O voo passa a ser guiado por Instrumentos (IFR)." },
-    { subject: "Regulamentos", question: "Qual é o documento que atesta a navegabilidade de uma aeronave?", options: ["CMA", "Certificado de Matrícula e Comprovante de Navegabilidade", "CIV", "CPL"], correct: 1, hint: "Procure a opção que menciona abertamente a Navegabilidade." },
-    { subject: "Regulamentos", question: "O limite máximo de validade do Exame Médico Pericial (CMA) varia de acordo com:", options: ["O fabricante da aeronave", "A idade e a função do piloto", "O número de passageiros", "O peso máximo de decolagem"], correct: 1, hint: "Depende de quem está voando (sua idade e tipo de licença)." },
-    { subject: "Regulamentos", question: "Qual é o código transponder padrão para declarar emergência geral a bordo?", options: ["7500", "7600", "7700", "2000"], correct: 2, hint: "A dica da torre é: 7700 é emergência geral!" },
-    { subject: "Regulamentos", question: "Qual código transponder deve ser acionado em caso de falha total de comunicações?", options: ["7500", "7600", "7700", "1200"], correct: 1, hint: "Sete-Meia-Zero-Zero para falha de rádio." },
-    { subject: "Regulamentos", question: "O código transponder 7500 indica:", options: ["Emergência médica", "Falha de rádio", "Interferência ilícita (Sequestro)", "Pane de motor"], correct: 2, hint: "Sete-Cinco-Zero-Zero é interferência ilícita." },
-    { subject: "Regulamentos", question: "O espaço aéreo no qual o serviço de controle de tráfego aéreo é prestado é chamado de:", options: ["Espaço Aéreo Controlado", "Área Livre", "Rota Não Homologada", "Zona Sem Rádio"], correct: 0, hint: "É um espaço que está sob controle!" },
+// Novas Questões: ESS (Emergência, Segurança e Sobrevivência), RPA (Humanos), PSS (Psicotrópicos/Saúde) e CGA (Conhecimentos Gerais)
+const newQuestions = [
+    // --- ESS (Emergência, Segurança e Sobrevivência) - 13 Questões ---
+    { 
+        subject: "ESS", 
+        question: "Em uma situação de sobrevivência na selva, qual deve ser a prioridade imediata logo após prestar os primeiros socorros?", 
+        options: ["Procurar alimentos imediatamente", "Sinalizar e construir ou buscar um abrigo", "Caminhar sem rumo procurando uma cidade", "Acender uma fogueira gigante"], 
+        correct: 1, 
+        hint: "A prioridade após socorrer os feridos é a proteção contra o clima e manter-se visível às equipes de resgate." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Qual o tipo de extintor de incêndio mais recomendado para combater fogos na classe C (equipamentos elétricos energizados)?", 
+        options: ["Água pressurizada", "Espuma mecânica", "Dióxido de Carbono (CO2) ou Pó Químico", "Sólidos inflamáveis"], 
+        correct: 2, 
+        hint: "Água conduz eletricidade e pode causar choques! Use extintores que abafem sem conduzir corrente." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Na sobrevivência no mar, o consumo de água do mar para hidratação é:", 
+        options: ["Totalmente recomendado em pequenas doses", "Altamente prejudicial, pois acelera a desidratação corporal", "Permitido se misturado com suco em pó", "Indicado apenas após o terceiro dia"], 
+        correct: 1, 
+        hint: "O sal exige mais água do corpo para ser filtrado pelos rins, acelerando severamente a desidratação." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Durante uma evacuação de emergência em terra (ditching/evacuação), qual o tempo máximo regulamentar recomendado para desocupar a aeronave?", 
+        options: ["90 segundos", "180 segundos", "5 minutos", "60 segundos"], 
+        correct: 0, 
+        hint: "O padrão internacional exige que a evacuação ocorra em no máximo 1 minuto e meio (90s)." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Qual é o apito ou sinalizador acoplado ao colete salva-vidas utilizado para?", 
+        options: ["Sinalização sonora e visual em resgates aquáticos", "Enfeite obrigatório da farda", "Medir a profundidade da água", "Chamar a atenção de tubarões"], 
+        correct: 0, 
+        hint: "Servem para emitir sinais de localização para os socorristas." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Em caso de despressurização rápida da cabine, a primeira atitude do comissário deve ser:", 
+        options: ["Pegar o extintor de incêndio", "Colocar a máscara de oxigênio mais próxima imediatamente", "Ajudar os passageiros primeiro", "Ir até a cabine de comando"], 
+        correct: 1, 
+        hint: "Regra básica de segurança: coloque sua máscara primeiro para garantir sua própria consciência antes de ajudar outros." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Na sobrevivência na selva, qual é a principal fonte para obtenção de água potável com segurança?", 
+        options: ["Água estagnada em pântanos sem ferver", "Chuva, orvalho, cipós adequados ou água fervida/tratada", "Água de poças barrentas sem filtragem", "Líquidos de plantas desconhecidas"], 
+        correct: 1, 
+        hint: "Água da chuva e de cipós adequados são opções puras e seguras em ambiente selvagem." 
+    },
+    { 
+        subject: "ESS", 
+        question: "O fogo de Classe A envolve materiais combustíveis sólidos, tais como:", 
+        options: ["Líquidos inflamáveis e tintas", "Madeira, papel, tecidos e plásticos", "Equipamentos elétricos sob tensão", "Metais pirofóricos como magnésio"], 
+        correct: 1, 
+        hint: "A classe 'A' lembra materiais sólidos que deixam 'Cinzas' ou resíduos." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Em um pouso de emergência na água (Ditching), os coletes salva-vidas dos passageiros devem ser inflados:", 
+        options: ["Dentro da aeronave antes de sair", "Apenas no momento em que estiver saindo da aeronave/na porta", "Na fila da poltrona", "Apenas quando a equipe de resgate chegar"], 
+        correct: 1, 
+        hint: "Se inflar dentro do avião, o colete pode prender o passageiro ou rasgar na saída." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Qual é o meio primário de combate ao fogo de pequenas proporções no lixo do lavatório da aeronave?", 
+        options: ["Extintor fixo de Halon acionado automaticamente por temperatura", "Jogar mantas térmicas", "Abrir a porta e soprar", "Usar garrafas de refrigerante"], 
+        correct: 0, 
+        hint: "Os lixeiros dos lavatórios possuem extintores automáticos acionados pelo calor excessivo." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Em caso de evacuação com fumaça na cabine, a instrução correta aos passageiros é:", 
+        options: ["Andar ereto correndo para a saída", "Baixar-se (curvar-se) e seguir as luzes de emergência no piso", "Tentar abrir as janelas de emergência do meio", "Ficar parado aguardando o fogo apagar"], 
+        correct: 1, 
+        hint: "A fumaça sobe; o ar mais limpo fica próximo ao assoalho." 
+    },
+    { 
+        subject: "ESS", 
+        question: "Qual artigo do Kit de Sobrevivência é fundamental para sinalização noturna de emergência?", 
+        options: ["Espelho de sinalização", "Foguete/Sinalizador pirotécnico (ou lanterna)", "Bússola magnética", "Ancoradouro de borracha"], 
+        correct: 1, 
+        hint: "Pirotécnicos ou fontes de luz intensa são visíveis à noite a grandes distâncias." 
+    },
+    { 
+        subject: "ESS", 
+        question: "O PBE (Protective Breathing Equipment) ou Máscara Antifumaça tem como função principal proteger o tripulante contra:", 
+        options: ["Baixa pressão em voos altos", "Gases tóxicos, fumaça e falta de oxigênio durante combate ao fogo", "Frio intenso na altitude de cruzeiro", "Perda de audição por ruídos de motores"], 
+        correct: 1, 
+        hint: "Utilizado pelos comissários para combater focos de incêndio com fumaça densa." 
+    },
 
-    // Meteorologia
-    { subject: "Meteorologia", question: "Em qual camada da atmosfera ocorrem quase todos os fenômenos meteorológicos?", options: ["Estratosfera", "Troposfera", "Termosfera", "Exosfera"], correct: 1, hint: "É a camada mais baixa e próxima da superfície da Terra." },
-    { subject: "Meteorologia", question: "Nuvens do tipo Cumulonimbus (CB) indicam a presença de:", options: ["Tempo estável e sem vento", "Forte turbulência, granizo e tempestades", "Apenas chuvisco fraco", "Nevoeiro rasaste"], correct: 1, hint: "São as nuvens temidas pelos pilotos devido a tempestades severas." },
-    { subject: "Meteorologia", question: "A passagem de uma Frente Fria geralmente traz:", options: ["Aumento da temperatura e vento calmo", "Queda de temperatura, ventos fortes e pancadas de chuva", "Céu limpo sem nuvens", "Pressão atmosférica constante"], correct: 1, hint: "O próprio nome sugere queda na temperatura e tempo instável." },
-    { subject: "Meteorologia", question: "O instrumento utilizado a bordo para medir a pressão atmosférica e determinar a altitude é o:", options: ["Velocímetro", "Altímetro", "Variômetro", "Horizontador"], correct: 1, hint: "Mede a altitude em pés." },
-    { subject: "Meteorologia", question: "O vento sopra das regiões de:", options: ["Baixa para Alta pressão", "Alta para Baixa pressão", "Temperatura menor para maior massa", "Oeste para Leste obrigatoriamente"], correct: 1, hint: "O ar se move de onde há mais pressão para onde há menos pressão." },
-    { subject: "Meteorologia", question: "Nuvens estratiformes (Stratus) costumam cobrir o céu como uma camada e geram:", options: ["Tempestades severas", "Chuva contínua ou chuvisco leve", "Granizo grande", "Tesoura de vento extrema"], correct: 1, hint: "Produzem chuvas contínuas e leves." },
-    { subject: "Meteorologia", question: "O nevoeiro é uma nuvem do tipo Stratus em contato com:", options: ["A alta troposfera", "O solo", "A estratosfera", "A superfície do mar apenas"], correct: 1, hint: "Quando a nuvem 'encosta' no chão!" },
-    { subject: "Meteorologia", question: "O fenômeno do Windshear (Tesoura de Vento) é perigoso principalmente nas fases de:", options: ["Cruzeiro em alta altitude", "Pouso e Decolagem", "Táxi na pista", "Estacionamento no pátio"], correct: 1, hint: "Acontece perto do solo quando a aeronave está em baixa velocidade." },
-    { subject: "Meteorologia", question: "A pressão padrão ao nível do mar na atmosfera ISA é de:", options: ["1013.2 hPa / 29.92 inHg", "1000 hPa", "1020.5 hPa", "28.50 inHg"], correct: 0, hint: "Número clássico: 1013 hPa ou 29.92 pol.Hg." },
-    { subject: "Meteorologia", question: "A temperatura média da atmosfera padrão (ISA) ao nível do mar é de:", options: ["20°C", "15°C", "0°C", "25°C"], correct: 1, hint: "Exatamente 15 graus Celsius!" },
+    // --- RPA (Relações Interpessoais e Fatores Humanos no CRM) - 12 Questões ---
+    { 
+        subject: "RPA", 
+        question: "O conceito de CRM (Corporate Resource Management / Crew Resource Management) na aviação visa principalmente:", 
+        options: ["Reduzir custos com combustível", "Maximizar o uso eficiente de todos os recursos disponíveis para a segurança do voo", "Acelerar o tempo de embarque dos passageiros", "Substituir a autoridade do Comandante"], 
+        correct: 1, 
+        hint: "Foca no gerenciamento de recursos humanos e materiais para promover um voo seguro." 
+    },
+    { 
+        subject: "RPA", 
+        question: "A Consciência Situacional pode ser definida como:", 
+        options: ["A capacidade de memorizar todos os procedimentos do manual", "A percepção correta do que está acontecendo ao redor da aeronave e a projeção do futuro próximo", "O conhecimento exclusivo de meteorologia", "A aptidão para pilotar em condições de tempestade"], 
+        correct: 1, 
+        hint: "Saber onde você está, o que está acontecendo agora e o que pode acontecer a seguir." 
+    },
+    { 
+        subject: "RPA", 
+        question: "Em uma comunicação eficaz entre a equipe de bordo, a técnica de 'Readback' (repetição) serve para:", 
+        options: ["Testar o volume dos alto-falantes", "Garantir que a mensagem foi recebida e compreendida corretamente", "Demonstrar autoridade na cabine", "Apressar as respostas do controle"], 
+        correct: 1, 
+        hint: "Repetir o que foi dito garante que nenhuma informação importante foi mal interpretada." 
+    },
+    { 
+        subject: "RPA", 
+        question: "O erro humano na aviação deve ser tratado pelas empresas aéreas prioritariamente através de uma abordagem:", 
+        options: ["Punitiva e com demissões imediatas", "Sistêmica, focando na prevenção e no aprendizado (Cultura Justa)", "Apenas com multas financeiras aos tripulantes", "Ignorando os erros leves"], 
+        correct: 1, 
+        hint: "A Cultura Justa busca entender as causas do erro para evitar que aconteçam novamente." 
+    },
+    { 
+        subject: "RPA", 
+        question: "A barreira de comunicação gerada por diferenças culturais ou ruído excessivo é chamada de:", 
+        options: ["Ruído ou Interferência na comunicação", "Sinergia de equipe", "Comunicação assertiva", "Feedback imediato"], 
+        correct: 0, 
+        hint: "Tudo o que atrapalha ou distorce a transmissão e recepção da mensagem." 
+    },
+    { 
+        subject: "RPA", 
+        question: "Trabalho em equipe com 'Sinergia' significa que:", 
+        options: ["O resultado do esforço conjunto é superior à soma dos esforços individuais", "Cada um deve trabalhar sozinho sem interferir no colega", "Apenas o Comandante toma decisões sem ouvir a equipe", "O voo é realizado sem planejamento prévio"], 
+        correct: 0, 
+        hint: "1 + 1 é maior que 2: o grupo trabalhando junto produz muito mais e melhor." 
+    },
+    { 
+        subject: "RPA", 
+        question: "O conceito de 'Sterile Cockpit' (Cabine Estéril) proíbe conversas não essenciais na cabine de comando abaixo de qual altitude?", 
+        options: ["5.000 pés", "10.000 pés", "18.000 pés", "20.000 pés"], 
+        correct: 1, 
+        hint: "Abaixo de 10.000 pés o foco é total nas fases críticas do voo (pouso, decolagem e subida)." 
+    },
+    { 
+        subject: "RPA", 
+        question: "Qual destas atitudes demonstra comportamentos de Assertividade adequados na aviação?", 
+        options: ["Expressar preocupações de segurança com clareza e respeito sem ser agressivo ou omisso", "Ficar calado diante de uma falha grave do Comandante por medo", "Gritar com a equipe quando algo dá errado", "Ignorar as ordens do plano de voo"], 
+        correct: 0, 
+        hint: "Assertividade é se posicionar com firmeza, clareza e respeito pela segurança do voo." 
+    },
+    { 
+        subject: "RPA", 
+        question: "A complacência na aviação geralmente ocorre quando:", 
+        options: ["Um tripulante experiente fica excessivamente confiante e relaxa na checagem dos itens de segurança", "O tripulante é novato e está muito estressado", "Há uma emergência grave na aeronave", "O voo está sendo realizado sob mau tempo"], 
+        correct: 0, 
+        hint: "A rotina e a falsa sensação de segurança levam a pessoa a 'baixar a guarda'." 
+    },
+    { 
+        subject: "RPA", 
+        question: "A fadiga humana no ambiente aeronáutico pode acarretar:", 
+        options: ["Aumento da atenção e dos reflexos", "Redução do tempo de reação, erros de julgamento e perda da consciência situacional", "Melhora no humor da tripulação", "Aumento da precisão na leitura de instrumentos"], 
+        correct: 1, 
+        hint: "O cansaço reduz a capacidade cognitiva e desacelera as respostas do cérebro." 
+    },
+    { 
+        subject: "RPA", 
+        question: "O Briefing pré-voo entre a tripulação serve para:", 
+        options: ["Apenas cumprimentar os colegas de trabalho", "Alinhar procedimentos, repassar regras de segurança e promover a integração do time", "Decidir quem vai almoçar primeiro", "Escolher as músicas do voo"], 
+        correct: 1, 
+        hint: "Momento crucial de planejamento de equipe antes de ligar os motores." 
+    },
+    { 
+        subject: "RPA", 
+        question: "Como um comissário deve lidar com um passageiro indisciplinado que recusa cumprir normas de segurança?", 
+        options: ["Usar de violência física imediata", "Manter a calma, agir com firmeza profissional e avisar o Chefe de Cabine/Comandante", "Devolver as ofensas na mesma moeda", "Ignorar o passageiro e deixar sem cinto"], 
+        correct: 1, 
+        hint: "Manter o controle emocional e seguir a cadeia de comando da aeronave." 
+    },
 
-    // Navegação
-    { subject: "Navegação", question: "A direção para onde o nariz da aeronave está apontado chama-se:", options: ["Rumo", "Proa", "Rota", "Azimute"], correct: 1, hint: "Para onde o nariz aponta é a PROA." },
-    { subject: "Navegação", question: "A trajetória real descrita pela aeronave em relação ao solo é o(a):", options: ["Proa", "Rumo (ou Rota)", "Deriva", "Declinação"], correct: 1, hint: "O caminho real sobre a terra é o Rumo/Rota." },
-    { subject: "Navegação", question: "O ângulo formado entre a Proa da aeronave e o Rumo percorrido devido ao vento é a:", options: ["Declinação Magnética", "Inclinação", "Deriva", "Loxodromia"], correct: 2, hint: "O vento empurra a aeronave gerando o ângulo de DERIVA." },
-    { subject: "Navegação", question: "As linhas imaginárias paralelas ao Equador terrestre são chamadas de:", options: ["Meridianos", "Paralelos de Latitude", "Azimutes", "Isóbaras"], correct: 1, hint: "São linhas paralelas ao Equador." },
-    { subject: "Navegação", question: "O Meridiano de referência internacional (0° de Longitude) é o de:", options: ["Equador", "Greenwich", "Capricórnio", "Câncer"], correct: 1, hint: "Localizado perto de Londres: Greenwich." },
-    { subject: "Navegação", question: "Uma milha náutica (NM) equivale a aproximadamente:", options: ["1000 metros", "1852 metros", "1609 metros", "2000 metros"], correct: 1, hint: "1 NM = 1.852 metros." },
-    { subject: "Navegação", question: "A bússola magnética indica o:", options: ["Norte Verdadeiro", "Norte Magnético", "Norte de Grade", "Sul Verdadeiro"], correct: 1, hint: "Por ter propriedades magnéticas, aponta para o Norte Magnético." },
-    { subject: "Navegação", question: "Uma hora de tempo no globo terrestre corresponde a quantos graus de longitude?", options: ["10°", "15°", "30°", "45°"], correct: 1, hint: "360° divididos por 24 horas = 15°." },
-    { subject: "Navegação", question: "Na escala fonética internacional, como pronunciamos a letra 'N'?", options: ["Navy", "November", "Node", "New York"], correct: 1, hint: "Corresponde ao mês de Novembro em inglês." },
-    { subject: "Navegação", question: "A agulha giroscópica utilizada para manter a direção do voo sem oscilar com o vento é o:", options: ["Giro Direcional", "Altímetro", "Clinômetro", "Turn Coordinator"], correct: 0, hint: "É o instrumento que dá a direção baseada no giroscópio." },
+    // --- PSS (Primeiros Socorros, Saúde e Psicotrópicos) - 12 Questões ---
+    { 
+        subject: "PSS", 
+        question: "Qual é a frequência de compressões por minuto recomendada ao realizar a Reanimação Cardiopulmonar (RCP) em adultos?", 
+        options: ["30 a 50 compressões/min", "100 a 120 compressões/min", "60 a 80 compressões/min", "150 a 200 compressões/min"], 
+        correct: 1, 
+        hint: "O ritmo ideal é forte e rápido, entre 100 e 120 batidas por minuto (ritmo da música 'Stayin' Alive')." 
+    },
+    { 
+        subject: "PSS", 
+        question: "A Hipóxia é uma condição médica grave causada por:", 
+        options: ["Excesso de oxigênio nos tecidos do corpo", "Deficiência de oxigênio nos tecidos orgânicos", "Aumento drástico da pressão sanguínea", "Excesso de açúcar no sangue"], 
+        correct: 1, 
+        hint: "O prefixo 'Hipo' indica redução/falta e 'oxia' refere-se ao Oxigênio." 
+    },
+    { 
+        subject: "PSS", 
+        question: "O fenômeno do 'Barotrauma' auditivo durante as descidas da aeronave ocorre devido a:", 
+        options: ["Diferença entre a pressão do ar do meio externo e a pressão interna do ouvido médio", "Infecção viral súbita", "Ingestão de alimentos gordurosos", "Exposição a ruídos altos dos motores"], 
+        correct: 0, 
+        hint: "Causado pela variação de pressão atmosférica na rápida variação de altitude." 
+    },
+    { 
+        subject: "PSS", 
+        question: "Para conter uma hemorragia externa abundante em um membro, a primeira conduta de primeiros socorros é:", 
+        options: ["Aplicar garrote de imediato sem tentar mais nada", "Realizar compressão direta sobre o ferimento com pano limpo ou gaze", "Lavar o ferimento com água quente e sabão", "Passar pomadas anestésicas"], 
+        correct: 1, 
+        hint: "Comprimir o local afetado com firmeza é a medida inicial mais segura para estancar o sangue." 
+    },
+    { 
+        subject: "PSS", 
+        question: "Qual destas atitudes NÃO deve ser tomada ao prestar socorro a uma pessoa em crise convulsiva?", 
+        options: ["Proteger a cabeça do indivíduo contra impactos", "Colocar a pessoa de lado após as contrações (posição lateral de segurança)", "Colocar objetos ou a mão dentro da boca da pessoa para segurar a língua", "Afastar objetos pontiagudos ao redor"], 
+        correct: 2, 
+        hint: "Nunca introduza nada na boca de quem está tendo uma convulsão!" 
+    },
+    { 
+        subject: "PSS", 
+        question: "Substâncias psicotrópicas depressoras do Sistema Nervoso Central (como álcool ou sedativos) provocam:", 
+        options: ["Aumento da agilidade e dos reflexos", "Lentidão nas funções cerebrais, sonolência e redução dos reflexos", "Aumento da percepção visual noturna", "Alucinações coloridas e euforia constante"], 
+        correct: 1, 
+        hint: "Substâncias 'depressoras' desaceleram a atividade e as respostas do cérebro." 
+    },
+    { 
+        subject: "PSS", 
+        question: "A Manobra de Heimlich é um procedimento de emergência indicado para casos de:", 
+        options: ["Parada cardiorrespiratória", "Obstrução grave das vias aéreas por corpo estranho (Engasgo)", "Queimaduras de 3º grau", "Fraturas expostas nas pernas"], 
+        correct: 1, 
+        hint: "Utilizada para expelir objetos ou alimentos entalados na garganta." 
+    },
+    { 
+        subject: "PSS", 
+        question: "Tripulantes de voo são proibidos de exercer suas funções sob efeito de bebidas alcoólicas. Qual o tempo mínimo de jejum alcoólico antes do voo segundo os regulamentos operacionais?", 
+        options: ["4 horas", "8 a 12 horas (conforme norma regulamentar/RBAC)", "24 horas obrigatoriamente", "1 hora"], 
+        correct: 1, 
+        hint: "O regulamento exige um intervalo mínimo estrito (geralmente de no mínimo 8 a 12h) sem álcool antes do serviço." 
+    },
+    { 
+        subject: "PSS", 
+        question: "Uma pessoa apresentando palidez, suor frio, tontura e pulso fraco pode estar entrando em estado de:", 
+        options: ["Hipertensão aguda", "Choque (Choque circulatório/hipovolêmico)", "Hipertermia severa", "Dengue leve"], 
+        correct: 1, 
+        hint: "O estado de choque causa queda de oxigenação e perfusão de sangue nos órgãos." 
+    },
+    { 
+        subject: "PSS", 
+        question: "O DEA (Desfibrilador Externo Automático) é um equipamento utilizado para tratar pacientes em:", 
+        options: ["Crise de ansiedade leve", "Parada Cardíaca por ritmos chocáveis (como Fibrilação Ventricular)", "Asma e falta de ar moderada", "Desmaios passageiros por queda de pressão"], 
+        correct: 1, 
+        hint: "O DEA analisa os batimentos do coração e aplica choques elétricos em paradas cardíacas." 
+    },
+    { 
+        subject: "PSS", 
+        question: "Em caso de queimadura de 1º ou 2º grau sem rompimento de bolhas, qual a conduta correta de primeiros socorros?", 
+        options: ["Passar manteiga ou pasta de dente no local", "Resfriar a área afetada com água corrente limpa e em temperatura ambiente", "Furar todas as bolhas IMEDIATAMENTE", "Colocar gelo direto sobre a pele queimada"], 
+        correct: 1, 
+        hint: "Lavar com água corrente limpa ajuda a resfriar o tecido sem agredir a pele." 
+    },
+    { 
+        subject: "PSS", 
+        question: "A aeroembolia (ou doença de descompressão) ocorre quando há formação de bolhas de qual gás no sangue devido à despressurização?", 
+        options: ["Oxigênio", "Nitrogênio", "Dióxido de Carbono", "Hélio"], 
+        correct: 1, 
+        hint: "O gás Nitrogênio dissolvido no sangue forma bolhas quando a pressão cai bruscamente." 
+    },
 
-    // Aerodinâmica
-    { subject: "Aerodinâmica", question: "A força aerodinâmica responsável por vencer o peso do avião é a:", options: ["Tração", "Sustentação", "Arrasto", "Gravidade"], correct: 1, hint: "O que mantém o avião lá em cima é a Sustentação." },
-    { subject: "Aerodinâmica", question: "A curvatura superior da asa de um avião é denominada:", options: ["Intradorso", "Extradorso", "Bordo de Fuga", "Corda"], correct: 1, hint: "Parte de cima da asa = Extradorso (Extra = fora/cima)." },
-    { subject: "Aerodinâmica", question: "De acordo com o Princípio de Bernoulli, onde a velocidade do ar aumenta, a pressão:", options: ["Aumenta", "Diminui", "Permanece igual", "Torna-se nula"], correct: 1, hint: "Mais velocidade do fluido = menor pressão." },
-    { subject: "Aerodinâmica", question: "O dispositivo de bordo de asa usado para aumentar a sustentação nos pousos é o:", options: ["Aileron", "Flape", "Leme de Direção", "Compensador"], correct: 1, hint: "Pilotos estendem o Flape no pouso!" },
-    { subject: "Aerodinâmica", question: "O Aileron é o comando responsável por controlar o movimento de:", options: ["Arfagem (nariz para cima/baixo)", "Bancagem / Rolagem (asa para cima/baixo)", "Guinada (nariz para esquerda/direita)", "Aceleração"], correct: 1, hint: "Faz a aeronave inclinar as asas (Rolagem / Bancagem)." },
-    { subject: "Aerodinâmica", question: "A perda súbita de sustentação quando a asa ultrapassa o ângulo de ataque crítico chama-se:", options: ["Glide", "Estol (Stall)", "Overspend", "Deriva"], correct: 1, hint: "Conhecido universalmente como Estol ou Stall." },
-    { subject: "Aerodinâmica", question: "O Leme de Direção, localizado no estabilizador vertical, controls o eixo de:", options: ["Lateral", "Longitudinal", "Vertical (Guinada)", "Transversal"], correct: 2, hint: "Controla a guinada do nariz para os lados." },
-    { subject: "Aerodinâmica", question: "O profundor (localizado na empenagem) controla o movimento de:", options: ["Guinada", "Arfagem (Pitch)", "Rolagem", "Arrasto induzido"], correct: 1, hint: "Arfagem: o movimento de subir ou descer o nariz." },
-    { subject: "Aerodinâmica", question: "O arrasto produzido como consequência inevitável da geração de sustentação é o:", options: ["Arrasto Parasita", "Arrasto Induzido", "Arrasto de Perfil", "Arrasto de Atrito"], correct: 1, hint: "Ele foi 'induzido' pela própria sustentação." },
-    { subject: "Aerodinâmica", question: "A linha reta que une o Bordo de Ataque ao Bordo de Fuga do aerofólio é a:", options: ["Linha do Equador", "Corda", "Curvatura Média", "Espessura Máxima"], correct: 1, hint: "A linha reta principal do perfil da asa é a Corda." },
-
-    // Conhecimentos Técnicos & Comunicação
-    { subject: "Conhecimentos Técnicos", question: "Nos motores aeronáuticos a pistão (como Lycoming e Continental), o sistema de ignição é alimentado por:", options: ["Bateria principal", "Magnetos independentes", "Alternador apenas", "Inversor elétrico"], correct: 1, hint: "São geradores independentes chamados Magnetos." },
-    { subject: "Conhecimentos Técnicos", question: "A mistura ar/combustível rica é utilizada principalmente em qual fase para resfriar o motor?", options: ["Decolagem e Subida com alta potência", "Voo de cruzeiro econômico", "Descida lenta", "Com a aeronave desligada"], correct: 0, hint: "Exige máxima potência: Decolagem e Subida." },
-    { subject: "Conhecimentos Técnicos", question: "A formação de gelo no carburador pode ocorrer mesmo em dias quentes devido a:", options: ["Queda de pressão e evaporação do combustível na agulha", "Uso de gasolina adulterada", "Vento de cauda", "Mistura muito pobre"], correct: 0, hint: "A rápida evaporação do combustível causa queda acentuada de temperatura." },
-    { subject: "Comunicação", question: "O termo utilizado pelo piloto ao controle de tráfego para interromper o pouso é:", options: ["Pouso forçado", "Arremeter (Going Around)", "Cancelando frequência", "Pista Livre"], correct: 1, hint: "Arremeter o voo e subir novamente." },
-    { subject: "Comunicação", question: "A expressão 'MAYDAY' repetida três vezes no rádio indica:", options: ["Urgência simples", "Situação de Perigo / Emergência Grave", "Pedido de combustível", "Mudança de plano de voo"], correct: 1, hint: "Sinal de socorro supremo e perigo grave!" },
-    { subject: "Comunicação", question: "A expressão 'PAN PAN' transmitida via rádio indica uma situação de:", options: ["Perigo iminente de queda", "Urgência (não há risco imediato à vida)", "Teste de microfone", "Autorização de decolagem"], correct: 1, hint: "Situação de Urgência que necessita atenção, mas sem perigo imediato de vida." },
-    { subject: "Comunicação", question: "Na radiocomunicação, como pronunciamos o número '9' segundo a norma padrão?", options: ["Nove", "Niner", "Nine", "Novena"], correct: 1, hint: "A pronúncia aeronáutica para 9 é Niner." },
-    { subject: "Comunicação", question: "O que o controle de tráfego quer dizer com 'Wilco'?", options: ["Não entendi", "Compreendido e cumprirei a instrução", "Aguarde na posição", "Repita a mensagem"], correct: 1, hint: "Vem de 'Will Comply' (Irei cumprir)." },
-    { subject: "Comunicação", question: "A frase 'Roger' na comunicação aeronáutica significa:", options: ["Autorizado decolar", "Recebi e entendi sua mensagem", "Cumprirei a ordem", "Aeronave arremetendo"], correct: 1, hint: "Apenas confirmação de mensagem recebida." },
-    { subject: "Comunicação", question: "O que significa a expressão 'Pista Livre'?", options: ["A pista está autorizada para pouso", "A aeronave livrou totalmente a pista após o pouso", "A pista está sem iluminação", "Não há tráfegos no aeroporto"], correct: 1, hint: "Que o avião já saiu completamente da pista após pousar." }
+    // --- CGA (Conhecimentos Gerais de Aeronaves) - 13 Questões ---
+    { 
+        subject: "CGA", 
+        question: "A parte da estrutura da aeronave composta pelas asas é chamada de:", 
+        options: ["Empenagem", "Grupamento Moto-Propulsor", "Sustentador / Aerofólio Principal", "Fuselagem"], 
+        correct: 2, 
+        hint: "As asas constituem o principal elemento aerodinâmico encarregado da sustentação do voo." 
+    },
+    { 
+        subject: "CGA", 
+        question: "O corpo principal da aeronave, onde se acomodam os passageiros, tripulação e cargas, chama-se:", 
+        options: ["Empenagem", "Fuselagem", "Extradorso", "Nacelle"], 
+        correct: 1, 
+        hint: "É o 'tubo' central do avião que conecta as asas e o trem de pouso." 
+    },
+    { 
+        subject: "CGA", 
+        question: "Os tanques de combustível principais da maioria dos jatos comerciais modernos ficam localizados:", 
+        options: ["No nariz da aeronave", "Nas asas", "No teto da cabine de passageiros", "Na empenagem vertical"], 
+        correct: 1, 
+        hint: "Aproveita-se o espaço interno das estruturas das asas para distribuir o peso do combustível." 
+    },
+    { 
+        subject: "CGA", 
+        question: "A APU (Auxiliary Power Unit / Unidade Auxiliar de Partida) de um avião comercial geralmente fica instalada:", 
+        options: ["No compartimento de carga dianteiro", "Na cauda (cone de cauda) da aeronave", "Embaixo do assento do Comandante", "Dentro do motor número 1"], 
+        correct: 1, 
+        hint: "Fica localizada na parte bem traseira da aeronave para fornecer energia e ar com o avião em solo." 
+    },
+    { 
+        subject: "CGA", 
+        question: "Qual superfície de comando primária é responsável por fazer o avião realizar o movimento de Arfagem (subir/descer o nariz)?", 
+        options: ["Leme de direção", "Profundor (Leme de Profundidade)", "Ailerons", "Flaps"], 
+        correct: 1, 
+        hint: "Localizado no estabilizador horizontal da cauda para empurrar ou puxar o nariz para cima/baixo." 
+    },
+    { 
+        subject: "CGA", 
+        question: "O trem de pouso do tipo 'Triciclo' possui qual configuração de rodas?", 
+        options: ["Duas rodas na cauda e uma no nariz", "Uma roda ou conjunto no nariz e conjuntos principais sob as asas/fuselagem", "Rodas apenas nas pontas das asas", "Três rodas exatamente alinhadas no meio do avião"], 
+        correct: 1, 
+        hint: "A maioria dos aviões modernos usa rodas no nariz e o conjunto principal no centro de gravidade." 
+    },
+    { 
+        subject: "CGA", 
+        question: "Os aerofólios conhecidos como Flaps e Slats são considerados superfícies de comando:", 
+        options: ["Primárias", "Secundárias ou Dispositivos Hipersustentadores", "De emergência apenas", "Para manobra de guinada"], 
+        correct: 1, 
+        hint: "Servem para aumentar a sustentação da asa em velocidades baixas (como no pouso e decolagem)." 
+    },
+    { 
+        subject: "CGA", 
+        question: "Motores a reação do tipo 'Turbofan' utilizam qual tipo de combustível na aviação comercial?", 
+        options: ["Gasolina de Aviação (AVGAS)", "Querosene de Aviação (QAV / Jet-A1)", "Álcool anidro", "Óleo Diesel comum"], 
+        correct: 1, 
+        hint: "Turbinas e jatos comerciais utilizam Querosene de Aviação (QAV)." 
+    },
+    { 
+        subject: "CGA", 
+        question: "A empenagem de uma aeronave é a estrutura localizada na parte traseira composta por:", 
+        options: ["Asas e motores", "Estabilizador Vertical e Estabilizador Horizontal", "Trem de pouso e porão", "Biruta e pito"], 
+        correct: 1, 
+        hint: "Forma o 'rabo' da aeronave, garantindo a estabilidade do voo." 
+    },
+    { 
+        subject: "CGA", 
+        question: "Os freios aerodinâmicos localizados na parte superior das asas, usados para destruir a sustentação no pouso, chamam-se:", 
+        options: ["Spoilers (Speedbrakes)", "Ailerons", "Tabs", "Compensadores"], 
+        correct: 0, 
+        hint: "A palavra em inglês vem de 'spoil' (estragar/destruir a sustentação do ar sobre a asa)." 
+    },
+    { 
+        subject: "CGA", 
+        question: "A pressurização da cabine é mantida durante o voo de cruzeiro utilizando ar extraído de onde?", 
+        options: ["De garrafas de ar comprimido no porão", "Do compressor dos próprios motores ou da APU", "Das janelas dos pilotos", "Do movimento das hélices"], 
+        correct: 1, 
+        hint: "O ar aquecido e pressurizado é sangrado das etapas de compressão do motor para a cabine." 
+    },
+    { 
+        subject: "CGA", 
+        question: "O instrumento que capta a pressão total do ar para indicar a velocidade da aeronave é o:", 
+        options: ["Tubo de Pitot", "Barômetro", "Termômetro de bordo", "Giroscópio"], 
+        correct: 0, 
+        hint: "Pequeno tubo montado na parte externa da fuselagem para medir a pressão do vento relativo." 
+    },
+    { 
+        subject: "CGA", 
+        question: "Em uma aeronave com motores a pistão (pequeno porte), qual combustível é utilizado predominantemente?", 
+        options: ["Querosene de Aviação (Jet-A1)", "Gasolina de Aviação (AVGAS)", "Biodiesel", "Gás Natural"], 
+        correct: 1, 
+        hint: "Motores menores a pistão usam AVGAS (Aviation Gasoline)." 
+    }
 ];
 
 // Elogios
