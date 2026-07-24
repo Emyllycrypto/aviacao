@@ -1,5 +1,5 @@
 // Novas Questões: ESS (Emergência, Segurança e Sobrevivência), RPA (Humanos), PSS (Psicotrópicos/Saúde) e CGA (Conhecimentos Gerais)
-const newQuestions = [
+const Questions = [
     // --- ESS (Emergência, Segurança e Sobrevivência) - 13 Questões ---
     { 
         subject: "ESS", 
